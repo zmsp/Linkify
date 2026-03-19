@@ -85730,7 +85730,7 @@ $0(){var s=0,r=A.M(t.H),q=1,p=[],o=this,n,m
 var $async$$0=A.N(function(a,b){if(a===1){p.push(b)
 s=q}for(;;)switch(s){case 0:q=3
 s=6
-return A.O(A.ar7(A.jr("https://linkify.pages.dev",0,null),B.oJ),$async$$0)
+return A.O(A.ar7(A.jr("https://linkify.pages.dev/promo",0,null),B.oJ),$async$$0)
 case 6:q=1
 s=5
 break
