@@ -4,28 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Generator | Easy Social Sharing</title>
+    <title>Linkify | Simple, Fast, Beautiful Social Sharing</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #128C7E;
             --primary-dark: #075E54;
+            --primary-light: #25D366;
+            --accent: #128C7E;
             --bg: #F8F9FA;
-            --card-bg: #FFFFFF;
+            --card-bg: rgba(255, 255, 255, 0.8);
             --text: #1F2C34;
             --text-muted: #667781;
             --white: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
                 --primary: #00A884;
                 --primary-dark: #008f6f;
-                --bg: #111B21;
-                --card-bg: #1F2C34;
+                --primary-light: #00d1a4;
+                --accent: #00A884;
+                --bg: #0B141A;
+                --card-bg: rgba(30, 44, 52, 0.8);
                 --text: #E9EDEF;
                 --text-muted: #8696A0;
                 --white: #202C33;
+                --glass: rgba(17, 27, 33, 0.7);
+                --glass-border: rgba(255, 255, 255, 0.1);
+                --shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 10px 15px -5px rgba(0, 0, 0, 0.1);
             }
         }
 
@@ -33,13 +46,16 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
@@ -50,12 +66,16 @@
 
         /* Navigation */
         nav {
-            padding: 24px 0;
-            background: transparent;
-            position: absolute;
+            padding: 20px 0;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: fixed;
             width: 100%;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
         }
 
         .nav-content {
@@ -70,43 +90,49 @@
             gap: 12px;
             text-decoration: none;
             color: var(--text);
-            font-weight: 700;
-            font-size: 1.25rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.03em;
         }
 
-        .brand img {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+        .brand i {
+            color: var(--primary);
+            font-size: 1.75rem;
         }
 
         /* Hero Section */
         .hero {
-            padding: 160px 0 100px;
+            padding: 180px 0 100px;
             text-align: center;
-            background: linear-gradient(135deg, rgba(18, 140, 126, 0.1) 0%, rgba(37, 211, 102, 0.05) 100%);
+            position: relative;
+            background: radial-gradient(circle at top right, rgba(18, 140, 126, 0.12), transparent),
+                        radial-gradient(circle at bottom left, rgba(37, 211, 102, 0.08), transparent);
         }
 
         .hero-badge {
-            display: inline-block;
-            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 20px;
             background: rgba(18, 140, 126, 0.1);
             color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            animation: slideUp 0.5s ease-out;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            border: 1px solid rgba(18, 140, 126, 0.2);
+            animation: fadeInDown 0.6s ease-out;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .hero h1 {
-            font-size: 4.5rem;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            animation: slideUp 0.6s ease-out;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            font-size: 5rem;
+            line-height: 1.05;
+            margin-bottom: 28px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            background: linear-gradient(135deg, var(--text) 30%, var(--primary));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -115,55 +141,59 @@
         .hero p {
             font-size: 1.25rem;
             color: var(--text-muted);
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto 48px;
-            animation: slideUp 0.7s ease-out;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            font-weight: 400;
         }
 
         /* Store Buttons */
         .store-btns {
             display: flex;
             justify-content: center;
-            gap: 16px;
-            animation: slideUp 0.8s ease-out;
+            gap: 20px;
+            animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .store-btn {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             background: var(--text);
             color: var(--bg);
-            padding: 12px 24px;
-            border-radius: 14px;
+            padding: 14px 28px;
+            border-radius: 18px;
             text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .store-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
         .store-btn i {
-            font-size: 24px;
+            font-size: 28px;
         }
 
         .store-btn .btn-text {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            text-align: left;
         }
 
         .store-btn small {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             line-height: 1;
             opacity: 0.8;
+            font-weight: 500;
         }
 
         .store-btn span {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.15rem;
+            font-weight: 700;
             line-height: 1.2;
         }
 
@@ -172,140 +202,261 @@
             color: white;
         }
 
+        /* Video Section */
+        .video-section {
+            padding: 60px 0 100px;
+            position: relative;
+        }
+
+        .video-outer {
+            max-width: 320px;
+            margin: 0 auto;
+            position: relative;
+            padding: 12px;
+            background: #1a1a1a;
+            border-radius: 48px;
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.3), 0 30px 60px -30px rgba(0, 0, 0, 0.3);
+            border: 4px solid #2a2a2a;
+        }
+
+        .video-container {
+            border-radius: 36px;
+            overflow: hidden;
+            aspect-ratio: 742 / 1492;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         /* Features Section */
         .features {
-            padding: 100px 0;
+            padding: 120px 0;
             background: var(--bg);
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 64px;
+            margin-bottom: 80px;
         }
 
         .section-header h2 {
-            font-size: 2.5rem;
+            font-size: 3rem;
+            font-weight: 800;
             margin-bottom: 16px;
+            letter-spacing: -0.03em;
         }
 
         .section-header p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 32px;
-            margin-bottom: 80px;
         }
 
         .feature-card {
             background: var(--card-bg);
-            padding: 40px;
-            border-radius: 24px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            padding: 48px;
+            border-radius: 32px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            transform: translateY(-12px);
+            box-shadow: var(--shadow);
+            border-color: rgba(18, 140, 126, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
         }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--bg);
-            border-radius: 16px;
+            width: 64px;
+            height: 64px;
+            background: rgba(18, 140, 126, 0.1);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
-            font-size: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 8px 16px rgba(18, 140, 126, 0.1);
+            font-size: 28px;
+            margin-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1) rotate(5deg);
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
-            margin-bottom: 12px;
+            font-weight: 700;
+            margin-bottom: 16px;
         }
 
         .feature-card p {
             color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
-        /* Screenshots Section */
-        .screenshots {
+        /* How it Works */
+        .how-it-works {
             padding: 100px 0;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--white) 100%);
+        }
+
+        .guide-container {
             background: var(--card-bg);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px;
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--glass-border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .guide-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 32px;
+            font-weight: 800;
+        }
+
+        .guide-item {
+            margin-bottom: 24px;
+        }
+
+        .guide-item strong {
+            display: block;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .guide-item p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Screenshots */
+        .screenshots {
+            padding: 120px 0;
+            background: var(--bg);
         }
 
         .screenshots-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 32px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
         }
 
         .screenshot-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: relative;
         }
 
         .screenshot-img {
             width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            margin-bottom: 16px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--glass-border);
+            margin-bottom: 20px;
         }
 
-        .screenshot-img:hover {
-            transform: translateY(-8px);
+        .screenshot-item:hover .screenshot-img {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
         }
 
         .screenshot-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
+            font-weight: 700;
             margin-bottom: 8px;
-            color: var(--text);
         }
 
         .screenshot-caption {
             font-size: 0.95rem;
             color: var(--text-muted);
-            max-width: 90%;
+            line-height: 1.5;
         }
 
-        /* Video Section */
-        .video-section {
+        /* CTA Section */
+        .cta {
             padding: 100px 0;
-            background: var(--card-bg);
             text-align: center;
+            background: var(--primary);
+            color: white;
+            border-radius: 60px 60px 0 0;
+            margin-top: 60px;
         }
 
-        .video-container {
-            max-width: 900px;
-            margin: 0 auto;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.1);
-            background: #000;
-            aspect-ratio: 16/9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+        .cta h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 24px;
+            letter-spacing: -0.04em;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta .store-btn {
+            background: white;
+            color: var(--primary-dark);
         }
 
         /* Footer */
         footer {
             padding: 80px 0 40px;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            background: var(--bg);
             text-align: center;
+            border-top: 1px solid var(--glass-border);
         }
 
         .footer-brand {
@@ -313,20 +464,23 @@
             justify-content: center;
             align-items: center;
             gap: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
+            font-weight: 800;
+            font-size: 1.5rem;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 24px;
-            margin-bottom: 32px;
+            gap: 32px;
+            margin-bottom: 40px;
         }
 
         .footer-links a {
             text-decoration: none;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 500;
             transition: color 0.2s;
         }
 
@@ -336,19 +490,41 @@
 
         .copyright {
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
 
         /* Animations */
-        @keyframes slideUp {
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .guide-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 40px;
+            }
+            .hero h1 {
+                font-size: 4rem;
             }
         }
 
@@ -356,19 +532,22 @@
             .hero h1 {
                 font-size: 3rem;
             }
-
+            .hero p {
+                font-size: 1.1rem;
+            }
             .store-btns {
                 flex-direction: column;
                 align-items: center;
             }
-
             .store-btn {
                 width: 100%;
-                max-width: 250px;
+                max-width: 280px;
             }
-
-            .features-grid {
-                grid-template-columns: 1fr;
+            .section-header h2 {
+                font-size: 2.25rem;
+            }
+            .cta h2 {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -376,14 +555,15 @@
 
 <body>
 
-    <nav>
+    <nav id="navbar">
         <div class="container nav-content">
-            <a href="/" class="brand">
-                <i class="fas fa-link" style="color: var(--primary);"></i>
-                <span>Link Generator</span>
+            <a href="promo.html" class="brand">
+                <i class="fas fa-link"></i>
+                <span>Linkify</span>
             </a>
-            <div class="nav-links">
-                <a href="/" class="store-btn btn-web" style="padding: 10px 20px; font-size: 0.9rem;">
+            <div class="nav-links" style="display: flex; align-items: center; gap: 24px;">
+                <a href="help.html" style="text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.95rem;">Help</a>
+                <a href="/" class="store-btn btn-web" style="padding: 10px 20px; font-size: 0.9rem; border-radius: 12px;">
                     <span>Launch App</span>
                 </a>
             </div>
@@ -392,130 +572,109 @@
 
     <header class="hero">
         <div class="container">
-            <span class="hero-badge">Instant Link Sharing</span>
-            <h1>Create Links. <br>Share Anywhere.</h1>
-            <p>Generate shareable HTTPS links for any social platform — perfect for emails, websites, QR codes, and
-                marketing. Works natively with your favorite apps.</p>
+            <span class="hero-badge">Sparkling New Version 2.0</span>
+            <h1>Create Links. <br>Share Everywhere.</h1>
+            <p>The ultimate tool to generate message-ready links for WhatsApp, Instagram, TikTok, and more. Optimized for creators, marketers, and everyone in between.</p>
 
             <div class="store-btns">
-                <!-- Apple Store Link -->
                 <a href="https://apps.apple.com/app/id6760180889" target="_blank" class="store-btn">
                     <i class="fab fa-apple"></i>
                     <div class="btn-text">
-                        <small>Download on the</small>
-                        <span>App Store</span>
+                        <small>Download for</small>
+                        <span>iOS</span>
                     </div>
                 </a>
 
-                <!-- Google Play Link -->
                 <a href="https://play.google.com/store/apps/details?id=io.github.zmsp.link_generator" target="_blank"
                     class="store-btn">
                     <i class="fab fa-google-play"></i>
                     <div class="btn-text">
-                        <small>Get it on</small>
-                        <span>Google Play</span>
+                        <small>Get it for</small>
+                        <span>Android</span>
                     </div>
                 </a>
 
-                <!-- Web Version -->
                 <a href="/" class="store-btn btn-web">
-                    <i class="fas fa-globe"></i>
+                    <i class="fas fa-bolt"></i>
                     <div class="btn-text">
-                        <small>Access anywhere</small>
-                        <span>Web Version</span>
+                        <small>Open in browser</small>
+                        <span>Web App</span>
                     </div>
                 </a>
             </div>
         </div>
     </header>
 
-    <section class="video-section" style="padding: 20px 0 60px; background: transparent;">
+    <section class="video-section">
         <div class="container">
-            <div class="video-container"
-                style="max-width: 300px; aspect-ratio: 742 / 1492; margin: 0 auto; box-shadow: 0 40px 80px rgba(0,0,0,0.15); border-radius: 32px; overflow: hidden; border: 10px solid var(--text);">
-                <video controls autoplay muted loop playsinline
-                    style="width: 100%; height: 100%; object-fit: cover; background: #000;">
-                    <source src="screenshots/demo.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+            <div class="video-outer">
+                <div class="video-container">
+                    <video controls autoplay muted loop playsinline>
+                        <source src="screenshots/demo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="features">
-        <div class="container text-center">
+        <div class="container">
             <div class="section-header">
-                <h2>Designed for Simplicity</h2>
-                <p>Everything you need to create and share app-specific links instantly.</p>
+                <h2>Simplicity at its Core</h2>
+                <p>Everything you need to create and share professional links in seconds.</p>
             </div>
 
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-share-nodes"></i></div>
-                    <h3>Multi-Platform Support</h3>
-                    <p>Generate links for WhatsApp, Facebook, LinkedIn, Instagram, TikTok, Cash App, Venmo, PayPal and
-                        more.</p>
+                    <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3>Multi-Platform</h3>
+                    <p>Native support for WhatsApp, Facebook, LinkedIn, Instagram, TikTok, Cash App, Venmo, and PayPal.</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-message"></i></div>
-                    <h3>Custom Messages</h3>
-                    <p>Pre-populate your links with customized text, phone numbers, and hashtags so the recipient just
-                        has to hit send.</p>
+                    <div class="feature-icon"><i class="fas fa-pen-nib"></i></div>
+                    <h3>Custom Content</h3>
+                    <p>Pre-populate links with custom text, phone numbers, and tags. Your recipients just need to hit send.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-qrcode"></i></div>
-                    <h3>Instant QR Codes</h3>
-                    <p>Generate and share scannable QR codes for your links instantly, perfect for in-person sharing or
-                        print materials.</p>
+                    <h3>Quick QR Codes</h3>
+                    <p>One-tap QR code generation for any link. Perfect for business cards, print, or in-person sharing.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="help-section" style="padding: 80px 0; background: var(--bg);">
+    <section class="how-it-works">
         <div class="container">
-            <div class="section-header">
-                <h2>How Link Generator Works</h2>
-                <p>Creating your perfect custom link or QR code is incredibly simple and takes just seconds!</p>
-            </div>
-
-            <div
-                style="background: var(--card-bg); max-width: 800px; margin: 0 auto; padding: 40px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.03);">
-                <div style="margin-bottom: 32px;">
-                    <h3 style="color: var(--primary); margin-bottom: 16px; font-size: 1.4rem;"><i
-                            class="fas fa-mobile-screen"></i> Quick Guide</h3>
-                    <div style="margin-bottom: 16px;">
-                        <strong style="display: block; font-size: 1.1rem; margin-bottom: 4px;">1. Enter Details</strong>
-                        <p style="color: var(--text-muted);">Type your phone number, custom message, or profile
-                            username.</p>
+            <div class="guide-container">
+                <div class="guide-section">
+                    <h3><i class="fas fa-terminal"></i> Workflow</h3>
+                    <div class="guide-item">
+                        <strong>1. Input Data</strong>
+                        <p>Paste a URL, type a username, or add a phone number with a custom message.</p>
                     </div>
-                    <div style="margin-bottom: 16px;">
-                        <strong style="display: block; font-size: 1.1rem; margin-bottom: 4px;">2. Choose App</strong>
-                        <p style="color: var(--text-muted);">Tap the specific platform you want to generate a link for.
-                        </p>
+                    <div class="guide-item">
+                        <strong>2. Select Apps</strong>
+                        <p>Pick one platform or select "All" to generate links for everyone at once.</p>
                     </div>
-                    <div>
-                        <strong style="display: block; font-size: 1.1rem; margin-bottom: 4px;">3. Share Link</strong>
-                        <p style="color: var(--text-muted);">Test the link, copy it to your clipboard, share it
-                            directly, or display a QR code!</p>
+                    <div class="guide-item">
+                        <strong>3. Execute</strong>
+                        <p>Share instantly, copy to clipboard, or scan the generated QR code.</p>
                     </div>
                 </div>
 
-                <div>
-                    <h3 style="color: var(--primary); margin-bottom: 16px; font-size: 1.4rem;"><i
-                            class="fas fa-lightbulb"></i> Pro Tips</h3>
-                    <div style="margin-bottom: 16px;">
-                        <strong style="display: block; font-size: 1.1rem; margin-bottom: 4px;">All Apps Mode</strong>
-                        <p style="color: var(--text-muted);">Pick "All" from the list to instantly generate customized
-                            URLs for every single app at once.</p>
+                <div class="guide-section">
+                    <h3><i class="fas fa-wand-magic-sparkles"></i> Power Features</h3>
+                    <div class="guide-item">
+                        <strong>Autosave State</strong>
+                        <p>Never lose your progress. Your inputs are saved locally and synced across sessions.</p>
                     </div>
-                    <div>
-                        <strong style="display: block; font-size: 1.1rem; margin-bottom: 4px;">Never Lose Your
-                            Work</strong>
-                        <p style="color: var(--text-muted);">Your inputted text is saved automatically. If you close the
-                            page or app, you can pick up exactly where you left off.</p>
+                    <div class="guide-item">
+                        <strong>Native Integration</strong>
+                        <p>Uses platform-specific deep links (URL schemes) for the most seamless user experience.</p>
                     </div>
                 </div>
             </div>
@@ -525,71 +684,61 @@
     <section class="screenshots">
         <div class="container text-center">
             <div class="section-header">
-                <h2>App Gallery</h2>
-                <p>See Link Generator in action across its different features.</p>
+                <h2>Sneak Peek</h2>
+                <p>A beautiful interface designed for clarity and speed.</p>
             </div>
             <div class="screenshots-grid">
                 <div class="screenshot-item">
-                    <img src="screenshots/screenshot_1.png" alt="Quick Message Links" class="screenshot-img">
-                    <h3 class="screenshot-title">Quick Message Links</h3>
-                    <p class="screenshot-caption">Easily create pre-filled message links for WhatsApp and more with
-                        phone numbers and custom text.</p>
+                    <img src="screenshots/screenshot_1.png" alt="Clean UI" class="screenshot-img">
+                    <h3 class="screenshot-title">Message Links</h3>
+                    <p class="screenshot-caption">Pre-filled messages for instant communication.</p>
                 </div>
                 <div class="screenshot-item">
-                    <img src="screenshots/screenshot_2.png" alt="One Input, Many Links" class="screenshot-img">
-                    <h3 class="screenshot-title">One Input, Many Links</h3>
-                    <p class="screenshot-caption">Enter your message once and instantly get formatted links for every
-                        messaging platform at once.</p>
+                    <img src="screenshots/screenshot_2.png" alt="Multi Gen" class="screenshot-img">
+                    <h3 class="screenshot-title">Batch Mode</h3>
+                    <p class="screenshot-caption">Generate 10+ links from a single input.</p>
                 </div>
                 <div class="screenshot-item">
-                    <img src="screenshots/screenshot_3.png" alt="Social Profile Links" class="screenshot-img">
-                    <h3 class="screenshot-title">Social Profile Links</h3>
-                    <p class="screenshot-caption">Share your social handles across Instagram, TikTok, and YouTube with
-                        professional profile deep-links.</p>
+                    <img src="screenshots/screenshot_3.png" alt="Social" class="screenshot-img">
+                    <h3 class="screenshot-title">Profile Links</h3>
+                    <p class="screenshot-caption">Professional deep-links to your social handles.</p>
                 </div>
                 <div class="screenshot-item">
-                    <img src="screenshots/screenshot_4.png" alt="Instant QR Codes" class="screenshot-img">
-                    <h3 class="screenshot-title">Instant QR Codes</h3>
-                    <p class="screenshot-caption">Generate scannable QR codes for any profile or message link so friends
-                        can scan and connect instantly.</p>
-                </div>
-                <div class="screenshot-item">
-                    <img src="screenshots/screenshot_5.png" alt="Deep Link Actions" class="screenshot-img">
-                    <h3 class="screenshot-title">Deep Link Actions</h3>
-                    <p class="screenshot-caption">Launch directly into apps, share to your native share sheet, or copy
-                        links with a single tap.</p>
-                </div>
-                <div class="screenshot-item">
-                    <img src="screenshots/screenshot_6.png" alt="Global App Support" class="screenshot-img">
-                    <h3 class="screenshot-title">Global App Support</h3>
-                    <p class="screenshot-caption">Support for every major platform including Threads, Bluesky, Discord,
-                        GitHub, and WhatsApp.</p>
-                </div>
-                <div class="screenshot-item">
-                    <img src="screenshots/screenshot_7.png" alt="Smart Formatting" class="screenshot-img">
-                    <h3 class="screenshot-title">Smart Formatting</h3>
-                    <p class="screenshot-caption">Links are automatically optimized for each platform's specific URL
-                        schemes and requirements.</p>
+                    <img src="screenshots/screenshot_4.png" alt="QR" class="screenshot-img">
+                    <h3 class="screenshot-title">QR Scanner</h3>
+                    <p class="screenshot-caption">Instant scannable codes for any generated link.</p>
                 </div>
             </div>
         </div>
     </section>
 
+
+
     <footer>
         <div class="container">
             <div class="footer-brand">
                 <i class="fas fa-link" style="color: var(--primary);"></i>
-                <span style="font-weight: 700;">Link Generator</span>
+                <span>Linkify</span>
             </div>
             <div class="footer-links">
-                <a href="/">Home</a>
-                <a href="/">App</a>
-                <a href="/privacy">Privacy Policy</a>
+                <a href="privacy.html">Privacy Policy</a>
             </div>
-            <p class="copyright">&copy; 2026 Link Generator. All rights reserved.</p>
+            <p class="copyright">&copy; 2026 Link Generator. Crafted with care for the web.</p>
         </div>
     </footer>
 
+    <script>
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.padding = '12px 0';
+                nav.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+            } else {
+                nav.style.padding = '20px 0';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
 </body>
 
 </html>
