@@ -5451,7 +5451,7 @@ SOFTWARE.
 
 --------------------------------------------------------------------------------
 flutter_lints
-flutter_markdown
+flutter_markdown_plus
 path_provider_windows
 plugin_platform_interface
 shared_preferences_linux

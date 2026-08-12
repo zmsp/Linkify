@@ -1,3 +1,4 @@
+c
 ### Version 2.2.0
 
 #### 📋 Smart Paste & Quick Clear
@@ -54,4 +55,3 @@ Here is a look back at some great features introduced in our earlier versions:
 - **Dark Mode**: A beautiful dark interface for improved readability and reduced eye strain.
 - **Multi-Select Platforms**: Choose multiple messaging and social platforms simultaneously for batch link generation.
 - **Persistent State**: Your platform selections and UI expanded/collapsed states are automatically saved across sessions.
-
