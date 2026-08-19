@@ -1,4 +1,13 @@
-c
+### Version 2.3.0
+
+#### 🛠️ In-App Support
+Need help or want to suggest a feature? You can now contact support directly from within the app!
+- **Support Requests**: Send feedback or report issues without leaving the app.
+- **Auto-Diagnostics**: App version and device info are automatically attached to help us assist you better.
+
+#### 📈 Under the Hood
+- Upgraded dependencies for better performance and stability.
+
 ### Version 2.2.0
 
 #### 📋 Smart Paste & Quick Clear
